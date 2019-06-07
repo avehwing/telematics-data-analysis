@@ -50,9 +50,15 @@ testDF <- dev_and_test[-dev_index,]
 trainDF %>% filter(label == 1) %>% nrow()
 # 4012 out of 15986 is dangerous driving (25.1%)
 
+# divide grabData_cleaned into train, dev and test
+grabData_train <-
+  grabData_cleaned %>% filter(bookingID %in% trainDF$bookingID)
 
+grabData_dev <-
+  grabData_cleaned %>% filter(bookingID %in% devDF$bookingID)
 
-
+grabData_test <-
+  grabData_cleaned %>% filter(bookingID %in% testDF$bookingID)
 
 
 
