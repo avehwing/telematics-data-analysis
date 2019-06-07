@@ -1,4 +1,5 @@
 library(tidyverse)
+library(caret)
 
 # a function to read all cvs files in a directory
 readAll <- function(directory){
@@ -32,14 +33,16 @@ labelDF_cleaned <-
 grabData_cleaned <-
   grabData %>% filter(!bookingID %in% label_doubled)
 
+# create training, dev and test set
+set.seed(100)
+train_index <- createDataPartition(labelDF_cleaned$bookingID, p = 0.8, list = FALSE)
+trainDF <- labelDF_cleaned[train_index,]
+dev_and_test <- labelDF_cleaned[-train_index,]
 
-
-
-
-
-
-
-
+# create dev and test set
+dev_index <- createDataPartition(dev_and_test$label, p = 0.5, list = FALSE)
+devDF <- dev_and_test[dev_index,]
+testDF <- dev_and_test[-dev_index,]
 
 
 
