@@ -44,8 +44,11 @@ dev_index <- createDataPartition(dev_and_test$label, p = 0.5, list = FALSE)
 devDF <- dev_and_test[dev_index,]
 testDF <- dev_and_test[-dev_index,]
 
+# keep dev and test set aside
+# examine the proportion of 0 and 1 in the data
 
-
+trainDF %>% filter(label == 1) %>% nrow()
+# 4012 out of 15986 is dangerous driving (25.1%)
 
 
 
