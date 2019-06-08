@@ -60,6 +60,50 @@ grabData_dev <-
 grabData_test <-
   grabData_cleaned %>% filter(bookingID %in% testDF$bookingID)
 
+# preliminary analysis: look at min, max, mean, median of acceleration
+# gyro and speed
+
+grabData_train_sum <-
+  grabData_train %>% 
+    group_by(bookingID) %>% 
+    summarise_at(vars(acceleration_x:gyro_z, Speed), 
+                 list(min = min, max = max, mean = mean, med = median))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
