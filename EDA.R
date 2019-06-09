@@ -85,8 +85,10 @@ boxplot_fn <- function(variables){
 }
 
 # extracting the name of acceleration x
-acceleration_x <- names(grabData_train_sum)[c(2,9,16)]
-acceleration_x <- set_names(acceleration_x, c("ax_min", "ax_max", "ax_med"))
+acceleration_x <- grabData_train_sum %>% 
+                      select(contains("acceleration_x")) %>% 
+                      colnames(.)
+acceleration_x <- set_names(acceleration_x, acceleration_x)
 
 # plotting boxplot for all acceleration x parameters in a grid
 plots <- map(acceleration_x, ~boxplot_fn(.x))
