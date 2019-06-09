@@ -1,5 +1,6 @@
 library(tidyverse)
 library(caret)
+library(gridExtra)
 
 # a function to read all cvs files in a directory
 readAll <- function(directory){
@@ -77,21 +78,20 @@ grabData_train_sum <-
 
 # visualise acceleration x
 
-# for label 0, no acceleration is lowerer than -33 ms-2
-p_min <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_min)) +
-            geom_boxplot()
+# function to plot boxplot
+boxplot_fn <- function(variables){
+    ggplot(grabData_train_sum, aes(x = as.factor(label), y = !!sym(variables))) +
+      geom_boxplot()
+}
 
-# No siginificant different pattern between 0 and 1 label
-p_max <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_max)) +
-            geom_boxplot()
+# extracting the name of acceleration x
+acceleration_x <- names(grabData_train_sum)[c(2,9,16)]
+acceleration_x <- set_names(acceleration_x, c("ax_min", "ax_max", "ax_med"))
 
-# the distribution is identical
-p_med <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_med)) +
-  geom_boxplot()
+# plotting boxplot for all acceleration x parameters in a grid
+plots <- map(acceleration_x, ~boxplot_fn(.x))
+ggarrange(plotlist = plots)
 
-# the distribution is identical
-p_mean <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_mean)) +
-  geom_boxplot()
 
 
 
