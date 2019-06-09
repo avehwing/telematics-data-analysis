@@ -69,13 +69,29 @@ grabData_train_sum <-
     summarise_at(vars(acceleration_x:gyro_z, Speed), 
                  list(min = min, max = max, mean = mean, med = median))
 
+# join preliminary analysis DF with labels
+
+grabData_train_sum <-
+  grabData_train_sum %>% left_join(trainDF, by = "bookingID")
 
 
+# visualise acceleration x
 
+# for label 0, no acceleration is lowerer than -33 ms-2
+p_min <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_min)) +
+            geom_boxplot()
 
+# No siginificant different pattern between 0 and 1 label
+p_max <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_max)) +
+            geom_boxplot()
 
+# the distribution is identical
+p_med <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_med)) +
+  geom_boxplot()
 
-
+# the distribution is identical
+p_mean <- ggplot(grabData_train_sum, aes(as.factor(label), acceleration_x_mean)) +
+  geom_boxplot()
 
 
 
