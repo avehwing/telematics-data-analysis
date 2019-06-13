@@ -61,6 +61,22 @@ grabData_dev <-
 grabData_test <-
   grabData_cleaned %>% filter(bookingID %in% testDF$bookingID)
 
+# to visualize the accelerometer data 
+
+options("scipen" = 10)
+glimpse(grabData_train)
+
+grabData_train %>% filter(bookingID == grabData_train$bookingID[5]) %>% arrange(second) %>% 
+  mutate(checker = row_number(second)- 1,
+         checker_2 = second - checker) %>% 
+  select(checker, second, checker_2) 
+
+# apparently there are some missing seconds in the dataset
+
+
+
+
+
 # preliminary analysis: look at min, max, mean, median of acceleration
 # gyro and speed
 
