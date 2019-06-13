@@ -73,9 +73,14 @@ grabData_train %>% filter(bookingID == grabData_train$bookingID[5]) %>% arrange(
 
 # apparently there are some missing seconds in the dataset
 
+grabData_train %>% filter(bookingID == grabData_train$bookingID[10]) %>% 
+  ggplot() +
+  geom_line(aes(x = second, y = acceleration_z - 9.81))+
+  geom_line(aes(x = second, y = acceleration_x), color = "blue") +
+  geom_line(aes(x = second, y = acceleration_y), color = "red")
 
-
-
+# the line plot of accelerometer showed that reorientation of the 
+# smartphone axis is required to match with the vehilce axis
 
 # preliminary analysis: look at min, max, mean, median of acceleration
 # gyro and speed
