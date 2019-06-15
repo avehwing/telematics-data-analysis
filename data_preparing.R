@@ -56,13 +56,21 @@ system.time(for(j in 1:length(new_col)){
 a_test <- 1:100
 rollapply(a_test, width = 10, mean, by = 4, align = "right")
 
+# reorientation of acceleration
+# using absolute value
+
+grabData_train_1 <- 
+  grabData_train_1 %>% select(acc_x_filtered:acc_z_filtered) %>% 
+  mutate(acc_ab = sqrt(acc_x_filtered^2 + acc_y_filtered^2 + acc_z_filtered^2))
+  
+
 # apply sliding windwows on filtered data
 
 grabData_train_preprocessed <-
-  grabData_train_1 %>% group_by(bookingID) %>% 
-  select(bookingID, acc_x_filtered, acc_y_filtered, acc_z_filtered, Speed_filtered, second) %>% 
-  arrange(bookingID, second) %>% 
-  summarise_at(vars(-second, -bookingID), rollapply, width = 250, by = 125, aligh = "right")
+  grabData_train_1 %>% 
+  group_by(bookingID) %>% 
+  select(acc_x_filtered, acc_y_filtered, acc_z_filtered, acc_ab, Speed_filtered) %>%
+  summarise_at(vars(acc_x_filtered:Speed), rollapply, width = 250, by = 125, aligh = "right")
 
 
 
