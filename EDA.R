@@ -61,6 +61,9 @@ grabData_dev <-
 grabData_test <-
   grabData_cleaned %>% filter(bookingID %in% testDF$bookingID)
 
+
+save(grabData_train, grabData_test, grabData_dev, trainDF, devDF, testDF, file = "preprocessed.RData")
+
 # to visualize the accelerometer data 
 
 options("scipen" = 10)
