@@ -51,11 +51,6 @@ system.time(for(j in 1:length(new_col)){
   grabData_train_1[new_col[j]] <- fil_fun(ids, column_names[j])
 })
 
-# test rollapplyr with overlapping 50%
-
-a_test <- 1:100
-rollapply(a_test, width = 10, mean, by = 4, align = "right")
-
 # reorientation of acceleration
 # using absolute value
 
@@ -70,7 +65,7 @@ grabData_train_preprocessed <-
   grabData_train_1 %>% 
   group_by(bookingID) %>% 
   select(acc_x_filtered, acc_y_filtered, acc_z_filtered, acc_ab, Speed_filtered) %>%
-  summarise_at(vars(acc_x_filtered:Speed), rollapply, width = 250, by = 125, aligh = "right")
+  summarise_at(vars(acc_x_filtered:Speed), rollapply, width = 250, mean, by = 125, align = "right")
 
 
 
