@@ -51,8 +51,18 @@ system.time(for(j in 1:length(new_col)){
   grabData_train_1[new_col[j]] <- fil_fun(ids, column_names[j])
 })
 
+# test rollapplyr with overlapping 50%
 
+a_test <- 1:100
+rollapply(a_test, width = 10, mean, by = 4, align = "right")
 
+# apply sliding windwows on filtered data
+
+grabData_train_preprocessed <-
+  grabData_train_1 %>% group_by(bookingID) %>% 
+  select(bookingID, acc_x_filtered, acc_y_filtered, acc_z_filtered, Speed_filtered, second) %>% 
+  arrange(bookingID, second) %>% 
+  summarise_at(vars(-second, -bookingID), rollapply, width = 250, by = 125, aligh = "right")
 
 
 
