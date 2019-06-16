@@ -2,6 +2,7 @@ library(tidyverse)
 library(signal)
 library(zoo)
 
+
 # load all preprocessed data
 load("./preprocessed.RData")
 
@@ -69,15 +70,42 @@ grabData_train_filtered <-
 save(grabData_train_1, grabData_train_filtered, file="filtered.RData")
 
 
-# apply sliding windwows on filtered data
+# apply sliding windwows on filtered data (75% overlap)
 
 grabData_train_preprocessed <-
-  grabData_train_1 %>% 
+  grabData_train_filtered %>%
   group_by(bookingID) %>% 
-  select(acc_x_filtered, acc_y_filtered, acc_z_filtered, acc_ab, Speed_filtered) %>%
-  summarise_at(vars(acc_x_filtered:Speed), rollapply, width = 250, mean, by = 125, align = "right")
+  mutate(acc_x = rollapply(acc_x_filtered, 
+                           width = 50, 
+                           FUN = mean, 
+                           by = 13, 
+                           fill = NA),
+         acc_y = rollapply(acc_y_filtered,
+                           width = 50,
+                           FUN = mean,
+                           by = 13,
+                           fill = NA),
+         acc_z = rollapply(acc_z_filtered,
+                           width = 50, 
+                           FUN = mean, 
+                           by = 13, 
+                           fill = NA),
+         speed = rollapply(Speed_filtered,
+                           width = 50, 
+                           FUN = mean, 
+                           by = 13, 
+                           fill = NA),
+         acc_ab = rollapply(acc_ab,
+                            width = 50, 
+                            FUN = mean, 
+                            by = 13, 
+                            fill = NA))
 
-
+# filter NA values
+grabData_train_preprocessed <-
+  grabData_train_preprocessed %>% 
+  dplyr::filter(!is.na(acc_x)) %>% 
+  select(bookingID, second, acc_x, acc_y, acc_z, acc_ab, speed)
 
 
 
