@@ -107,6 +107,47 @@ grabData_train_preprocessed <-
   dplyr::filter(!is.na(acc_x)) %>% 
   select(bookingID, second, acc_x, acc_y, acc_z, acc_ab, speed)
 
+# feature engineering: rotation angle- phi and theta
+
+grabData_train_preprocessed <-
+  grabData_train_preprocessed %>% 
+  mutate(rot_phi = atan(acc_y/sqrt(acc_x^2 + acc_z^2)),
+         rot_theta = atan(-acc_x/acc_z))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
