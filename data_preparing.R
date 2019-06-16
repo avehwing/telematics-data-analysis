@@ -158,17 +158,11 @@ grabData_train_ready <-
             acc_z.sma = 1/100 * sum((abs(acc_z) - abs(lead(acc_z))) * (lead(second) - second), na.rm = TRUE),
             acc_ab.sma = 1/100 * sum((abs(acc_ab) - abs(lead(acc_ab))) * (lead(second) - second), na.rm = TRUE),
             acc_ab.dsvm = 1/100 * sum((abs(acc_ab_p) - abs(lead(acc_ab_p))) * (lead(second) - second), na.rm = TRUE),
-            acc_ab.svm = 1/n() * sum(sqrt(acc_ab^2))) %>% 
-  na.omit()
+            acc_ab.svm = 1/n() * sum(sqrt(acc_ab^2)))
 
 # remove 1 bookingID trip because contains a NA value
 
-# join with response variable
-grabData_train_ready <-
-  grabData_train_ready %>% 
-  left_join(trainDF, by = "bookingID")
-
-saveRDS(grabData_train_ready, file = "grabData_train_ready")
+saveRDS(grabData_train_ready, file = "grabData_train_ready.rds")
 
 
 
