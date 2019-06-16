@@ -114,9 +114,54 @@ grabData_train_preprocessed <-
   mutate(rot_phi = atan(acc_y/sqrt(acc_x^2 + acc_z^2)),
          rot_theta = atan(-acc_x/acc_z))
 
+# feature engineering: 38 features
+grabData_train_preprocessed <-
+  grabData_train_preprocessed %>% 
+  mutate(acc_ab_p = lead(acc_ab) - acc_ab)
 
+grabData_train_ready <- 
+  grabData_train_preprocessed %>% 
+  group_by(bookingID) %>% 
+  summarise(acc_x.mean = mean(acc_x),
+            acc_y.mean = mean(acc_y),
+            acc_z.mean = mean(acc_z),
+            acc_ab.mean = mean(acc_ab),
+            phi.mean = mean(rot_phi),
+            theta.mean = mean(rot_theta),
+            speed.mean = mean(speed),
+            acc_x.var = var(acc_x),
+            acc_y.var = var(acc_y),
+            acc_z.var = var(acc_z),
+            phi.var = var(rot_phi),
+            theta.var = var(rot_theta),
+            speed.var = var(speed),
+            acc_x.sd = sd(acc_x),
+            acc_y.sd = sd(acc_y),
+            acc_z.sd = sd(acc_z),
+            speed.sd = sd(speed),
+            acc_x.diff = max(acc_x) - min(acc_x),
+            acc_y.diff = max(acc_y) - min(acc_y),
+            acc_z.diff = max(acc_z) - min(acc_z),
+            speed.diff = max(speed) - min(speed),
+            cor_xy = cor(acc_x, acc_y, method = "pearson"),
+            cor_xz = cor(acc_x, acc_z, method = "pearson"),
+            cor_yz = cor(acc_y, acc_z, method = "pearson"),
+            acc_x.zc = sum(acc_x == 0, na.rm = TRUE),
+            acc_y.zc = sum(acc_y == 0, na.rm = TRUE),
+            acc_z.zc = sum(acc_z == 0, na.rm = TRUE),
+            acc_x.par = max(acc_x) / mean(acc_x),
+            acc_y.par = max(acc_y) / mean(acc_y),
+            acc_z.par = max(acc_z) / mean(acc_z),
+            speed.par = max(speed, na.rm = TRUE) / mean(speed, na.rm = TRUE),
+            acc_x.sma = 1/100 * sum((abs(acc_x) - abs(lead(acc_x))) * (lead(second) - second), na.rm = TRUE),
+            acc_y.sma = 1/100 * sum((abs(acc_y) - abs(lead(acc_y))) * (lead(second) - second), na.rm = TRUE),
+            acc_z.sma = 1/100 * sum((abs(acc_z) - abs(lead(acc_z))) * (lead(second) - second), na.rm = TRUE),
+            acc_ab.sma = 1/100 * sum((abs(acc_ab) - abs(lead(acc_ab))) * (lead(second) - second), na.rm = TRUE),
+            acc_ab.dsvm = 1/100 * sum((abs(acc_ab_p) - abs(lead(acc_ab_p))) * (lead(second) - second), na.rm = TRUE),
+            acc_ab.svm = 1/n() * sum(sqrt(acc_ab^2))) %>% 
+  na.omit()
 
-
+# remove 1 bookingID trip because contains a NA value
 
 
 
