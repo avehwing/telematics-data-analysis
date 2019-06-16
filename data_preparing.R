@@ -163,12 +163,12 @@ grabData_train_ready <-
 
 # remove 1 bookingID trip because contains a NA value
 
+# join with response variable
+grabData_train_ready <-
+  grabData_train_ready %>% 
+  left_join(trainDF, by = "bookingID")
 
-
-
-
-
-
+saveRDS(grabData_train_ready, file = "grabData_train_ready")
 
 
 
