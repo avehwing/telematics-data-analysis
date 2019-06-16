@@ -51,13 +51,23 @@ system.time(for(j in 1:length(new_col)){
   grabData_train_1[new_col[j]] <- fil_fun(ids, column_names[j])
 })
 
+grabData_train_1["Speed_filtered"] <- fil_fun(ids, "Speed")
+
 # reorientation of acceleration
 # using absolute value
 
 grabData_train_1 <- 
-  grabData_train_1 %>% select(acc_x_filtered:acc_z_filtered) %>% 
+  grabData_train_1 %>% 
   mutate(acc_ab = sqrt(acc_x_filtered^2 + acc_y_filtered^2 + acc_z_filtered^2))
-  
+
+# a copy of filtered features  
+grabData_train_filtered <-
+  grabData_train_1 %>%
+  select(bookingID, second,contains("filtered"), acc_ab)
+
+# save a copy of the filtered features (avoid long running time: 1.3 hours)
+save(grabData_train_1, grabData_train_filtered, file="filtered.RData")
+
 
 # apply sliding windwows on filtered data
 
