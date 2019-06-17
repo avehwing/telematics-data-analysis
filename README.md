@@ -30,3 +30,30 @@ The following is the detail of the label dataset:
 | label | 0: Safe, 1: Dangerous driving |
 
 However, the dataset may not be available after the deadline of the challenge.
+
+## User Instruction
+
+**This project used R (3.5) as the programming language to tackle the problem. It requires the following packages:**
+
+| No. | Package | Version |
+| --- | --- | --- |
+| 1 | tidyverse | 1.2.1 |
+| 2 | zoo | 1.8-4 |
+| 3 | signal | 0.7-6 |
+| 4 | caret | 6.0-84 |
+| 5 | DMwR | 0.4.1 |
+| 6 | doParallel | 1.0.14 |
+| 7 | ROSE | 0.0-3
+
+
+
+
+
+
+
+
+
+
+
+
+
