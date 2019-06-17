@@ -45,7 +45,6 @@ fitcontrol <- trainControl(
   classProbs = TRUE,
   allowParallel = TRUE,
   summaryFunction = twoClassSummary,
-  sampling = "smote"
 )
 
 # model training using random forest algorithm
