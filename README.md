@@ -6,7 +6,7 @@ This repository is created for participating in the Grab AI for SEA Challenge, s
 ### Dataset
 The full dataset can be downloaded at https://s3-ap-southeast-1.amazonaws.com/grab-aiforsea-dataset/safety.zip. The full dataset consists of two separate tables which are the telematic data table and label data table.
 
-The following is the detail of the dataset:\n\n
+The following is the detail of the telematic dataset:
 
 | Field | Description |
 | --- | --- |
@@ -21,5 +21,12 @@ The following is the detail of the dataset:\n\n
 | gyro_z | gyroscope reading in z axis (rad/s) |
 | second | time of the record by number of seconds |
 | Speed | speed measured by GPS in m/s |
+
+The following is the detail of the label dataset:
+
+| Field | Description |
+| --- | --- |
+| bookingID | trip id |
+| label | 0: Safe, 1: Dangerous driving |
 
 However, the dataset may not be available after the deadline of the challenge.
