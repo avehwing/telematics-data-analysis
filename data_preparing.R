@@ -149,8 +149,6 @@ grabData_train_ready <-
             acc_ab.dsvm = 1/100 * sum((abs(acc_ab_p) - abs(lead(acc_ab_p))) * (lead(second) - second), na.rm = TRUE),
             acc_ab.svm = 1/n() * sum(sqrt(acc_ab^2)))
 
-# remove 1 bookingID trip because contains a NA value
-
 saveRDS(grabData_train_ready, file = "grabData_train_ready.rds")
 
 
