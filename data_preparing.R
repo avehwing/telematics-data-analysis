@@ -34,15 +34,6 @@ fil_fun <- function(ids, column_name){
   return(filtered)
 }
 
-# visualize the effect of  band pass filter
-testing <- grabData_train_1 %>% dplyr::filter(bookingID == grabData_train_1$bookingID[1]) 
-
-ggplot(data = testing)+
-  geom_line(aes(x = second, y = acceleration_z)) +
-  geom_line(aes(x = second, y = acc_z_filtered), color = "green") +
-  xlab("Time (seconds)") +
-  ylab("Acceleration") 
-
 # apply bandpass filter on acceleration and speed data
 
 column_names <- names(grabData_train_1)[c(2,3,4,6)]
@@ -51,8 +42,6 @@ new_col <- c("acc_x_filtered", "acc_y_filtered", "acc_z_filtered", "Speed_filter
 system.time(for(j in 1:length(new_col)){
   grabData_train_1[new_col[j]] <- fil_fun(ids, column_names[j])
 })
-
-grabData_train_1["Speed_filtered"] <- fil_fun(ids, "Speed")
 
 # reorientation of acceleration
 # using absolute value
