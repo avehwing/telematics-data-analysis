@@ -45,7 +45,7 @@ fitcontrol <- trainControl(
   classProbs = TRUE,
   allowParallel = TRUE,
   summaryFunction = twoClassSummary,
-  sampling = "rose"
+  sampling = "smote"
 )
 
 # model training using random forest algorithm
@@ -71,7 +71,7 @@ confus_trainDF <- confusionMatrix(
 test_data <- preprocessing(grabData_dev, devDF)
 
 # model prediction with dev set
-predicted_testData <- predict(model_rf, testData)
+predicted_testData <- predict(model_rf, test_data)
 
 # confusion matrix of dev set
 confu_testData <- confusionMatrix(reference = test_data$label, data = predicted_testData)
