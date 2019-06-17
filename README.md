@@ -6,7 +6,8 @@ This repository is created for participating in the Grab AI for SEA Challenge, s
 ### Dataset
 The full dataset can be downloaded at https://s3-ap-southeast-1.amazonaws.com/grab-aiforsea-dataset/safety.zip. The full dataset consists of two separate tables which are the telematic data table and label data table.
 
-The following is the detail of the dataset:
+The following is the detail of the dataset:\n\n
+
 | Field | Description |
 | --- | --- |
 | bookingID | trip id |
