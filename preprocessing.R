@@ -3,10 +3,10 @@ library(signal)
 library(zoo)
 
 # a function to apply bandpass filter on sensor data
-fil_fun <- function(ids, column_name){
+fil_fun <- function(ids, column_name, newDF, bw){
   filtered <- NULL
   for(id in ids){
-    df <- grabData_train_1[grabData_train_1$bookingID == id, column_name]
+    df <- newDF[newDF$bookingID == id, column_name]
     fil <- filtfilt(bw, df[[column_name]])
     filtered <- c(filtered, fil)
   }
@@ -35,7 +35,7 @@ preprocessing_stage_1 <- function(test_DF){
   new_col <- c("acc_x_filtered", "acc_y_filtered", "acc_z_filtered", "Speed_filtered")
   
   for(j in 1:length(new_col)){
-    newDF[new_col[j]] <- fil_fun(ids, column_names[j])
+    newDF[new_col[j]] <- fil_fun(ids, column_names[j], newDF, bw)
   }
   
   # reorientation of acceleration
