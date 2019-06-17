@@ -179,7 +179,18 @@ preprocessing <- function(newDF, labelDF){
   return(newDF)
 }
 
-
+hold_out_test <- function(newDF, labelDF, model){
+  # preprocessing of dev set  
+  test_data <- preprocessing(newDF, labelDF)
+  
+  # model prediction with dev set
+  predicted_testData <- predict(model, test_data)
+  
+  # confusion matrix of dev set
+  confu_testData <- confusionMatrix(reference = test_data$label, data = predicted_testData)
+  
+  return(confu_testData)
+}
 
 
 
