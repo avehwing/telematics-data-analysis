@@ -24,16 +24,6 @@ grabData_train_ready$label <- y
 grabData_train_ready <-
   grabData_train_ready %>% na.omit()
 
-# create predictors and response variable from training set
-xx <- grabData_train_ready %>% select(-bookingID)
-
-yy <- 
-  trainDF %>% 
-  mutate(label = case_when(label == 1 ~ "Dangerous", 
-                           label == 0 ~ "Safe")) %>% 
-  mutate(label = as.factor(label)) %>% select(label)
-
-
 library(parallel)
 library(doParallel)
 cluster <- makeCluster(detectCores() -1)
@@ -41,10 +31,10 @@ registerDoParallel(cluster)
 
 fitcontrol <- trainControl(
   method = "cv",
-  number = 3,
+  number = 5,
   classProbs = TRUE,
-  savePredictions = "final",
-  allowParallel = TRUE
+  allowParallel = TRUE,
+  summaryFunction = twoClassSummary
 )
 
 model_rf <- train(label~., data = select(grabData_train_ready, -bookingID) , method = "rf", trControl = fitcontrol,
