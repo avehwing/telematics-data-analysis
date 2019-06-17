@@ -14,4 +14,4 @@ label_DF <- read_csv("./")
 
 # load result
 result <- hold_out_test(test_DF, label_DF, model_rf)
-
+print(result)
