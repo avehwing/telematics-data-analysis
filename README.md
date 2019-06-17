@@ -33,7 +33,7 @@ However, the dataset may not be available after the deadline of the challenge.
 
 ## User Instruction
 
-**This project used R (3.5) as the programming language to tackle the problem. It requires the following packages:**
+**This project used R (3.5.3) as the programming language to tackle the problem. It requires the following packages:**
 
 | No. | Package | Version |
 | --- | --- | --- |
@@ -45,9 +45,39 @@ However, the dataset may not be available after the deadline of the challenge.
 | 6 | doParallel | 1.0.14 |
 | 7 | ROSE | 0.0-3
 
+This repository contains 5 main R scripts to run the challenge.
 
+1. EDA.R
+2. data_preparing.R
+3. machine learning.R
+4. preprocessing.R
+5. holdOutTest.R
 
+The first two scripts are prepared for data pre-processing which including joining tables and features extraction. The third script is dedicated for model training using random forest algorithm. Next, the fourth script is written with helper function to run the hold out test script. Lastly, holdOutTest.R is the script prepared for model validation.
 
+The following is the steps of using holdOutTest.R:
+1. Load all of the libraries, helper function and the prediction model.
+```
+library(tidyverse)
+library(caret)
+library(signal)
+library(zoo)
+
+source("./preprocessing.R")
+
+# load model
+model_rf <- readRDS("./model_rf.rds")
+```
+2. Load the test set and label data
+```
+test_DF <- read_csv("./grabData_test")
+label_DF <- read_csv("./test_label")
+```
+3. Run the helper function to obtain the result
+```
+result <- hold_out_test(test_DF, label_DF, model_rf)
+print(result)
+```
 
 
 
